@@ -25,38 +25,46 @@ export class SeedService {
      }
 
     async seed() {
-
-        for (const role of this.roles) {
-            const existingRole = await this.roleModel.findOne({ name: role.name });
-            if (!existingRole) {
-                await this.roleModel.create(role);
-                this.logger.log(`Inserted role: ${role.name}`);
-            } else {
-                this.logger.log(`Role ${role.name} already exists`);
-            }
-        }
-
-        for (const category of this.categories) {
-            let categoryAdded = null;
-            const existingCategory = await this.categoryModel.findOne({ name: category.name });
-            if (!existingCategory) {
-                categoryAdded = await this.categoryModel.create(category);
-                this.logger.log(`Inserted category: ${category.name}`);
-            } else {
-                categoryAdded = await this.categoryModel.findOne({name: category.name});
-                this.logger.log(`Category ${category.name} already exists`);
-            }
-
-            if (categoryAdded) {
-                for (const bookData of category.books) {
-                    const book = {
-                        ...bookData, 
-                        category: new Types.ObjectId(categoryAdded._id).toString()
-                    };
-                    await this.bookService.addbook(book);
-                    this.logger.log(`Inserted book: ${bookData.title}`);
+        try {
+            for (const role of this.roles) {
+                const existingRole = await this.roleModel.findOne({ name: role.name });
+                if (!existingRole) {
+                    await this.roleModel.create(role);
+                    this.logger.log(`Inserted role: ${role.name}`);
+                } else {
+                    this.logger.log(`Role ${role.name} already exists`);
                 }
             }
+            
+            for (const category of this.categories) {
+                let categoryAdded = await this.categoryModel.findOne({ name: category.name });
+                
+                if (!categoryAdded) {
+                    categoryAdded = await this.categoryModel.create(category);
+                    this.logger.log(`Inserted category: ${category.name}`);
+                } else {
+                    this.logger.log(`Category ${category.name} already exists`);
+                }
+    
+                if (categoryAdded) {
+                    const booksPromises = category.books.map(bookData => {
+                        const book = {
+                            ...bookData, 
+                            category: {
+                                _id: categoryAdded._id,
+                                name: categoryAdded.name
+                            }
+                        };
+                        return this.bookService.addbook(book)
+                            .then(() => this.logger.log(`Inserted book: ${bookData.title}`))
+                            .catch(error => this.logger.error(`Error inserting book: ${bookData.title}`, error));
+                    });
+    
+                    await Promise.all(booksPromises);
+                }
+            }
+        } catch (error) {
+            this.logger.error('Error processing categories', error);
         }
     }
 }

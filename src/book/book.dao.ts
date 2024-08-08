@@ -16,9 +16,7 @@ export class BookDao {
     }
 
     async find() {
-        return await this.bookModel.find()
-            .populate('category', null, Category.name)
-            .exec();
+        return await this.bookModel.find();
     }
 
     async findById(id: string): Promise<Book> {
