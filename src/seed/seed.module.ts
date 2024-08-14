@@ -3,9 +3,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Role, RoleSchema } from '../auth/schemas/role.schema';
 import { SeedService } from './seed.service';
 import { Category, CategorySchema } from '../category/schemas/category.schema';
-import { Book, BookSchema } from '../book/schemas/books.schema';
-import { BookService } from '../book/book.service';
-import { BookDao } from '../book/book.dao';
+import { Product, ProductSchema } from '../products/schemas/product.schema';
+import { ProductService } from '../products/product.service';
+import { ProductDao } from '../products/product.dao';
 import { ResponseService } from '../common/services/response.service';
 
 @Module({
@@ -18,10 +18,10 @@ import { ResponseService } from '../common/services/response.service';
                 name: Category.name, schema: CategorySchema
             },
             {
-                name: Book.name, schema: BookSchema
+                name: Product.name, schema: ProductSchema
             }
         ]),
     ],
-    providers: [SeedService, BookService, BookDao, ResponseService],
+    providers: [SeedService, ProductService, ProductDao, ResponseService],
 })
 export class SeedModule { }

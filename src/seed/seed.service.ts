@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Role } from '../auth/schemas/role.schema';
 import { Category } from '../category/schemas/category.schema';
-import { BookService } from '../book/book.service';
+import { ProductService } from '../products/product.service';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -16,7 +16,7 @@ export class SeedService {
     constructor(
         @InjectModel(Role.name) private roleModel: Model<Role>,
         @InjectModel(Category.name) private categoryModel: Model<Category>,
-        private bookService: BookService
+        private productService: ProductService
     ) {
         const cateforiesFile = join(process.cwd(), 'src/seed/data', 'categories.json');
         this.categories = JSON.parse(readFileSync(cateforiesFile, 'utf-8'));
@@ -47,20 +47,20 @@ export class SeedService {
                 }
     
                 if (categoryAdded) {
-                    const booksPromises = category.books.map(bookData => {
-                        const book = {
-                            ...bookData, 
+                    const productsPromises = category.products.map(productData => {
+                        const product = {
+                            ...productData, 
                             category: {
                                 _id: categoryAdded._id,
                                 name: categoryAdded.name
                             }
                         };
-                        return this.bookService.addbook(book)
-                            .then(() => this.logger.log(`Inserted book: ${bookData.title}`))
-                            .catch(error => this.logger.error(`Error inserting book: ${bookData.title}`, error));
+                        return this.productService.addproduct(product)
+                            .then(() => this.logger.log(`Inserted product: ${productData.name}`))
+                            .catch(error => this.logger.error(`Error inserting product: ${productData.name}`, error));
                     });
     
-                    await Promise.all(booksPromises);
+                    await Promise.all(productsPromises);
                 }
             }
         } catch (error) {

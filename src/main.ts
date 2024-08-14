@@ -18,8 +18,8 @@ async function bootstrap() {
   app.enableCors(corsOptions);
 
   const config = new DocumentBuilder()
-    .setTitle('Books')
-    .setDescription('The Books APIs')
+    .setTitle('ShoppingKart')
+    .setDescription('The ShoppingKart APIs')
     .setVersion('1.0')
     .addBearerAuth(
       {

@@ -1,5 +1,5 @@
 
-# NestJS Books Project
+# NestJS ShoppingKart Project
 
 [![License](https://img.shields.io/github/license/saluki/nestjs-template.svg)](https://github.com/saluki/nestjs-template/blob/master/LICENSE)
 
@@ -18,13 +18,13 @@ Before starting, make sure you have at least these components on your workstatio
 Start by cloning this project on your workstation.
 
 ``` sh
-git clone git@bitbucket.org:mmohitssingla/books.git
+git clone git@bitbucket.org:mmohitssingla/shoppingkart.git
 ```
 
 The next thing will be to install all the dependencies of the project.
 
 ```sh
-cd ./books
+cd ./shoppingkart
 npm install
 ```
 

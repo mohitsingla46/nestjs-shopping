@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { BookModule } from './book/book.module';
+import { ProductModule } from './products/product.module';
 import { SeedModule } from './seed/seed.module';
 import { CategoryModule } from './category/category.module';
 import { RolesModule } from './roles/role.module';
@@ -14,7 +14,7 @@ import { RolesModule } from './roles/role.module';
         uri: process.env.MONGODB_URI
       })
     }),
-    BookModule,
+    ProductModule,
     SeedModule,
     CategoryModule,
     RolesModule
