@@ -18,13 +18,13 @@ Before starting, make sure you have at least these components on your workstatio
 Start by cloning this project on your workstation.
 
 ``` sh
-git clone git@bitbucket.org:mmohitssingla/shoppingkart.git
+git clone https://github.com/mohitsingla46/nestjs-shoppingkart.git
 ```
 
 The next thing will be to install all the dependencies of the project.
 
 ```sh
-cd ./shoppingkart
+cd ./nestjs-shoppingkart
 npm install
 ```
 
