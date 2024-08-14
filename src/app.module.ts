@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BookModule } from './book/book.module';
 import { SeedModule } from './seed/seed.module';
 import { CategoryModule } from './category/category.module';
+import { RolesModule } from './roles/role.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { CategoryModule } from './category/category.module';
     }),
     BookModule,
     SeedModule,
-    CategoryModule
+    CategoryModule,
+    RolesModule
   ],
   controllers: [],
   providers: [],
