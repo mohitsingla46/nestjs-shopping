@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, UsePipes, ValidationPipe, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe, UseGuards } from "@nestjs/common";
 import { ProductDto } from "./dto/product.dto";
 import { Product } from "./schemas/product.schema";
 import { ProductService } from "./product.service";

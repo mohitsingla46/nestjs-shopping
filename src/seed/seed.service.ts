@@ -50,10 +50,7 @@ export class SeedService {
                     const productsPromises = category.products.map(productData => {
                         const product = {
                             ...productData, 
-                            category: {
-                                _id: categoryAdded._id,
-                                name: categoryAdded.name
-                            }
+                            category_id: categoryAdded._id
                         };
                         return this.productService.addproduct(product)
                             .then(() => this.logger.log(`Inserted product: ${productData.name}`))

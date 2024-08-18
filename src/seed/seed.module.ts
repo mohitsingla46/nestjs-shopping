@@ -7,6 +7,8 @@ import { Product, ProductSchema } from '../products/schemas/product.schema';
 import { ProductService } from '../products/product.service';
 import { ProductDao } from '../products/product.dao';
 import { ResponseService } from '../common/services/response.service';
+import { CategoryDao } from '../category/category.dao';
+import { CategoryService } from '../category/category.service';
 
 @Module({
     imports: [
@@ -22,6 +24,6 @@ import { ResponseService } from '../common/services/response.service';
             }
         ]),
     ],
-    providers: [SeedService, ProductService, ProductDao, ResponseService],
+    providers: [CategoryDao, CategoryService, ProductService, ProductDao, SeedService, ResponseService],
 })
 export class SeedModule { }

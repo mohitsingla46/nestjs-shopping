@@ -1,19 +1,33 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { Product } from "./schemas/product.schema";
+import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { ProductDao } from './product.dao';
 import { ResponseService } from "../common/services/response.service";
 import { ResponseDto } from "src/common/dto/response.dto";
+import { ProductDto } from "./dto/product.dto";
+import { CategoryService } from "../category/category.service";
 
 @Injectable({})
 export class ProductService {
     constructor(
         private readonly productDao: ProductDao,
+        private readonly categoryService: CategoryService,
         private readonly responseService: ResponseService
     ) { }
 
-    async addproduct(product: Product): Promise<ResponseDto<any>> {
+    async addproduct(productDto: ProductDto): Promise<ResponseDto<any>> {
         try {
-            const productAdded = await this.productDao.create(product);
+            const { category_id, ...productData } = productDto;
+            const categoryObject = await this.categoryService.getCategoryById(category_id.toString());
+            if (!categoryObject) {
+                const error = `Category with ID ${category_id} not found`;
+                return this.responseService.error(error, HttpStatus.BAD_REQUEST);
+            }
+            const productAdded = await this.productDao.create({
+                ...productData, 
+                category: {
+                    _id: categoryObject._id,
+                    name: categoryObject.name
+                }
+              });
             return this.responseService.success(productAdded);
         }
         catch (error) {

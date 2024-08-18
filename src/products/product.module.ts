@@ -6,6 +6,9 @@ import { ProductService } from './product.service';
 import { User, UserSchema } from '../auth/schemas/users.schema';
 import { ProductDao } from './product.dao';
 import { ResponseService } from '../common/services/response.service';
+import { Category, CategorySchema } from '../category/schemas/category.schema';
+import { CategoryService } from '../category/category.service';
+import { CategoryDao } from '../category/category.dao';
 
 @Module({
     imports: [MongooseModule.forFeature([
@@ -14,9 +17,12 @@ import { ResponseService } from '../common/services/response.service';
         },
         {
             name: User.name, schema: UserSchema
+        },
+        {
+            name: Category.name, schema: CategorySchema
         }
     ])],
     controllers: [ProductController],
-    providers: [ProductDao, ProductService, ResponseService]
+    providers: [CategoryDao, CategoryService, ProductDao, ProductService, ResponseService]
 })
 export class ProductModule { }
