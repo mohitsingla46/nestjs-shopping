@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe, UseGuards, Put } from "@nestjs/common";
 import { ProductDto } from "./dto/product.dto";
 import { Product } from "./schemas/product.schema";
 import { ProductService } from "./product.service";
@@ -13,7 +13,7 @@ import { admin, vendor, user } from "../utils/constants";
 export class ProductController {
     constructor(private productService: ProductService) { }
 
-    @Post('add_product')
+    @Post('')
     @ApiTags('protected')
     @ApiBearerAuth('access-token')
     @Roles(admin, vendor)
@@ -22,7 +22,7 @@ export class ProductController {
         return this.productService.addproduct(product);
     }
 
-    @Get('list')
+    @Get('')
     @ApiTags('protected')
     @ApiBearerAuth('access-token')
     @Roles(admin, vendor, user)
@@ -36,6 +36,14 @@ export class ProductController {
     @Roles(admin, vendor, user)
     async getProduct(@Param('id') id: string): Promise<any> {
         return this.productService.getproductbyid(id);
+    }
+
+    @Put(':id')
+    @ApiTags('protected')
+    @ApiBearerAuth('access-token')
+    @Roles(admin, vendor)
+    async updateProduct(@Param('id') id: string, @Body() product: ProductDto): Promise<any> {
+        return this.productService.updateProduct(id, product);
     }
 
     @Delete(':id')

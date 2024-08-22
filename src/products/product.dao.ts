@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Product } from "./schemas/product.schema";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { ProductDto } from "./dto/product.dto";
 
 @Injectable()
 export class ProductDao {
@@ -24,5 +25,9 @@ export class ProductDao {
 
     async findByIdAndDelete(id: string): Promise<Product> {
         return await this.productModel.findByIdAndDelete(id);
+    }
+
+    async update(id: string, productDto: ProductDto): Promise<Product> {
+        return await this.productModel.findByIdAndUpdate(id, productDto, {new: true});
     }
 }
