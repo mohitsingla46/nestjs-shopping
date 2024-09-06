@@ -5,6 +5,7 @@ import { ProductModule } from './products/product.module';
 import { SeedModule } from './seed/seed.module';
 import { CategoryModule } from './category/category.module';
 import { RolesModule } from './roles/role.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { RolesModule } from './roles/role.module';
     ProductModule,
     SeedModule,
     CategoryModule,
-    RolesModule
+    RolesModule,
+    ChatModule
   ],
   controllers: [],
   providers: [],
